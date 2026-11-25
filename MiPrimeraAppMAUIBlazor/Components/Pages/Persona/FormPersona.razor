@@ -1,0 +1,55 @@
+﻿@page "/persona/nuevo"
+@inject NavigationManager navigationManager
+@using MiPrimeraAppMAUIBlazor.Services
+@using MiPrimeraAppMAUIBlazor.Class.Persona
+@inject PersonaService personaService
+
+<h3>Formulario Persona</h3>
+
+<EditForm Model="persona" OnSubmit="guardar">
+    <div class="mb-3">
+        <label>Nombre</label>
+        <InputText class="form-control" @bind-Value="persona.Nombre" />
+    </div>
+
+    <div class="mb-3">
+        <label>Apellido paterno</label>
+        <InputText class="form-control" @bind-Value="persona.Appaterno" />
+    </div>
+
+    <div class="mb-3">
+        <label>Apellido materno</label>
+        <InputText class="form-control" @bind-Value="persona.Apmaterno" />
+    </div>
+
+    <button class="btn btn-success" type="submit">Guardar</button>
+    <button class="btn btn-secondary" type="button" @onclick="regresar">Regresar</button>
+</EditForm>
+
+@if (!string.IsNullOrEmpty(mensaje))
+{
+    <div class="alert alert-success mt-3">@mensaje</div>
+}
+
+@code {
+
+    private PersonaListCLS persona = new PersonaListCLS();
+    private string mensaje = string.Empty;
+
+    private async Task guardar()
+    {
+      //AQUI DEBERIA DE PONER UN TRY CATCH 
+      //O 
+       //DEBERERIA IR UN IF QUE VALIDA QUE LOS DATOS 
+
+        await personaService.guardarPersona(persona);
+        mensaje = "La persona se guardó correctamente.";
+        persona = new PersonaListCLS();
+    }
+
+    private async Task regresar()
+    {
+        navigationManager.NavigateTo("/persona"); // LA DIRECCION 
+    }
+
+}

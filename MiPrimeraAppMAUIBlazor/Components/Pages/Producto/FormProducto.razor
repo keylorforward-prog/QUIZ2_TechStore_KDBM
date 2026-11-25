@@ -1,0 +1,56 @@
+@page "/producto/nuevo"
+@inject NavigationManager navigationManager
+@using MiPrimeraAppMAUIBlazor.Services
+@using MiPrimeraAppMAUIBlazor.Class.Modelos
+@inject ProductoService productoService
+
+<h3>Registrar Producto</h3>
+
+<EditForm Model="producto" OnSubmit="guardar"> 
+
+    <div class="mb-3">
+        <label>Nombre</label>
+        <InputText class="form-control" @bind-Value="producto.Nombre" />
+    </div>
+
+    <div class="mb-3">
+        <label>Precio</label>
+        <InputNumber class="form-control" @bind-Value="producto.Precio" />
+    </div>
+
+    <div class="mb-3">
+        <label>Descripción</label>
+        <InputText class="form-control" @bind-Value="producto.Descripcion" />
+    </div>
+
+    <div class="mb-3">
+        <label>Stock</label>
+        <InputNumber class="form-control" @bind-Value="producto.Stock" />
+    </div>
+
+    <button class="btn btn-success" type="submit">Guardar</button>
+    <button class="btn btn-secondary" type="button" @onclick="regresar">Regresar</button>
+</EditForm>
+
+@if (!string.IsNullOrEmpty(mensaje))
+{
+    <div class="alert alert-success mt-3">@mensaje</div>
+}
+
+@code {
+
+    private Producto producto = new Producto();
+    private string mensaje = string.Empty;
+
+    private async Task guardar()
+    {
+        await productoService.guardarProducto(producto);
+        mensaje = "El producto se guardó correctamente.";
+        producto = new Producto();
+    }
+
+    private void regresar()
+    {
+        navigationManager.NavigateTo("/producto");
+    }
+}

@@ -1,0 +1,16 @@
+﻿@page "/"
+@inject NavigationManager navigationManager
+
+<h3>Bienvenido a TechStore S.A.</h3>
+
+<p>Aplicación para consultar y registrar productos.</p>
+
+<button class="btn btn-primary" @onclick="verProductos">Ver productos</button>
+
+@code {
+
+    private void verProductos()
+    {
+        navigationManager.NavigateTo("/producto");
+    }
+}

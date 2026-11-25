@@ -1,0 +1,58 @@
+﻿@page "/producto"
+@inject NavigationManager navigationManager
+@using MiPrimeraAppMAUIBlazor.Services
+@using MiPrimeraAppMAUIBlazor.Class.Modelos
+@inject ProductoService productoService
+
+<h3>Productos</h3>
+
+<div class="text-center">
+    <button class="btn btn-success" @onclick="nuevo">Nuevo</button>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nombre</th>
+            <th>Precio</th>
+            <th>Op</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var fila in lista)
+        {
+            <tr>
+                <td>@fila.IdProducto</td>
+                <td>@fila.Nombre</td>
+                <td>@fila.Precio</td>
+                <td>
+                    <button class="btn btn-primary" @onclick="(() => detalle(fila.IdProducto))">
+                        Detalle
+                    </button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+
+    public List<Producto> lista = new List<Producto>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        lista = await productoService.listaProducto();
+    }
+
+    private void nuevo()
+    {
+        navigationManager.NavigateTo("/producto/nuevo");
+    }
+
+    private void detalle(int idProducto)
+    {
+        navigationManager.NavigateTo($"/producto/detalle/{idProducto}");
+    }
+}

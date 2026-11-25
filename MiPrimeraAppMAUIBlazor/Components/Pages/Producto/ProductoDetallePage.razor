@@ -1,0 +1,40 @@
+@page "/producto/detalle/{IdProducto:int}"
+@inject NavigationManager navigationManager
+@using MiPrimeraAppMAUIBlazor.Services
+@using MiPrimeraAppMAUIBlazor.Class.Modelos
+@inject ProductoService productoService
+
+<h3>Detalle del Producto</h3>
+
+@if (producto is null) //AQUI EL IF DE SI NO LO ENCUENTRA 
+{
+    <p>No se encontró el producto.</p>
+}
+else
+{
+    <p><strong>Id:</strong> @producto.IdProducto</p>
+    <p><strong>Nombre:</strong> @producto.Nombre</p>
+    <p><strong>Precio:</strong> @producto.Precio</p>
+    <p><strong>Descripción:</strong> @producto.Descripcion</p>
+    <p><strong>Stock:</strong> @producto.Stock</p>
+}
+
+<button class="btn btn-secondary" @onclick="regresar">Regresar</button>
+
+@code {
+    //ESTO LO CAMBIE, RECORDAR QUE AGARRE EL APLICATIVO DEL PROFESOR COMO BASE 
+    [Parameter]
+    public int IdProducto { get; set; }
+
+    private Producto? producto;
+
+    protected override async Task OnInitializedAsync()
+    {
+        producto = await productoService.obtenerProducto(IdProducto);
+    }
+
+    private void regresar()
+    {
+        navigationManager.NavigateTo("/producto");
+    }
+}

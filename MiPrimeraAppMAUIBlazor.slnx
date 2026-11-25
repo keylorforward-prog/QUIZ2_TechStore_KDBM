@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="MiPrimeraAppMAUIBlazor.Class/MiPrimeraAppMAUIBlazor.Class.csproj" Id="e2a5bf88-3ae2-464e-9c45-71b7c0208c47" />
+  <Project Path="MiPrimeraAppMAUIBlazor/MiPrimeraAppMAUIBlazor.csproj">
+    <Deploy Solution="Debug|*" />
+  </Project>
+</Solution>
